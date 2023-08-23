@@ -5,9 +5,9 @@ const mongoose = require('mongoose')
 
 const errorController = require('./controllers/error.js')
 const mongoConnect = require('./util/database.js').mongoConnect
+const User = require('./models/user.js')
 // const sequelize = require('./util/database.js')
 // const Product = require('./models/product.js')
-// const User = require('./models/user.js')
 // const Cart = require('./models/cart.js')
 // const CartItem = require('./models/cart-items.js')
 
@@ -25,13 +25,13 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')))
 
 app.use((req, res, next) =>{
-    // User.findByPk(1)
-    // .then(user =>{
-    //     req.user = user;
-    //     next()
-    // })
-    // .catch(err => console.log(err))
-    next()
+    User.findById('64e67c1124882e74e6f74489')
+    .then(user =>{
+        req.user = user;
+        next()
+    })
+    .catch(err => console.log(err))
+    // next()
 })
 
 app.use('/admin', adminRoutes)
