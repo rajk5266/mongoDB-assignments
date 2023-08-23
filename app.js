@@ -17,7 +17,7 @@ app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminRoutes = require('./routes/admin.js')
-// const shopRoutes = require('./routes/shop.js')
+const shopRoutes = require('./routes/shop.js')
 // const contactRoutes = require('./routes/contactus.js')
 // const SUCCESSroutes = require('./routes/successroutes.js')
 
@@ -35,7 +35,7 @@ app.use((req, res, next) =>{
 })
 
 app.use('/admin', adminRoutes)
-// app.use(shopRoutes)
+app.use(shopRoutes)
 // app.use('/admin' , contactRoutes)
 // app.use('/admin',SUCCESSroutes)
 app.use(errorController.get404)
@@ -46,26 +46,6 @@ app.use(errorController.get404)
 // Cart.belongsTo(User);
 // Cart.belongsToMany(Product, { through: CartItem});
 // Product.belongsToMany(Cart, { through: CartItem});
-
-// sequelize
-// //  .sync( {force: true})
-//  .sync( )
-//  .then(result => {
-//     return User.findByPk(1)
-//      })
-//      .then(user =>{
-//         if(!user){
-//             return User.create({name: 'raj', email: "dummyemail2h.com"})
-//         }
-//         return user;
-//      })
-//      .then(user =>{
-//         return user.createCart()
-//      })
-//      .then(
-//         app.listen(4000)
-//      )
-//  .catch(err => console.log(err))
 
 
 // mongoose.connect(
