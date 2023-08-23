@@ -1,0 +1,81 @@
+const path = require('path')
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose')
+
+const errorController = require('./controllers/error.js')
+const mongoConnect = require('./util/database.js').mongoConnect
+// const sequelize = require('./util/database.js')
+// const Product = require('./models/product.js')
+// const User = require('./models/user.js')
+// const Cart = require('./models/cart.js')
+// const CartItem = require('./models/cart-items.js')
+
+const app = express()
+
+app.set('view engine', 'ejs');
+app.set('views', 'views');
+
+const adminRoutes = require('./routes/admin.js')
+// const shopRoutes = require('./routes/shop.js')
+// const contactRoutes = require('./routes/contactus.js')
+// const SUCCESSroutes = require('./routes/successroutes.js')
+
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.use((req, res, next) =>{
+    // User.findByPk(1)
+    // .then(user =>{
+    //     req.user = user;
+    //     next()
+    // })
+    // .catch(err => console.log(err))
+    next()
+})
+
+app.use('/admin', adminRoutes)
+// app.use(shopRoutes)
+// app.use('/admin' , contactRoutes)
+// app.use('/admin',SUCCESSroutes)
+app.use(errorController.get404)
+
+// Product.belongsTo(User, { constraints: true, onDelete: 'CASCADE'});
+// User.hasMany(Product);
+// User.hasOne(Cart);
+// Cart.belongsTo(User);
+// Cart.belongsToMany(Product, { through: CartItem});
+// Product.belongsToMany(Cart, { through: CartItem});
+
+// sequelize
+// //  .sync( {force: true})
+//  .sync( )
+//  .then(result => {
+//     return User.findByPk(1)
+//      })
+//      .then(user =>{
+//         if(!user){
+//             return User.create({name: 'raj', email: "dummyemail2h.com"})
+//         }
+//         return user;
+//      })
+//      .then(user =>{
+//         return user.createCart()
+//      })
+//      .then(
+//         app.listen(4000)
+//      )
+//  .catch(err => console.log(err))
+
+
+// mongoose.connect(
+//     "mongodb+srv://kushwaharaj903:9lFNRLohp8GYtEoi@cluster0.lllbyqe.mongodb.net/?retryWrites=true&w=majority"
+// )
+// .then(result => {
+//     console.log('connected')
+// })
+// .catch(err => console.log(err))
+mongoConnect(() => {
+    app.listen(4000)
+})
+//9lFNRLohp8GYtEoi
