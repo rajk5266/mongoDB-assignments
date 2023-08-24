@@ -75,6 +75,7 @@ Product.findById(prodId).then(product => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+    .populate('userId')
     .then((products) => {
       res.render('admin/products', {
         prods: products,
