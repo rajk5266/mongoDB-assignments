@@ -4,8 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose')
 
 const errorController = require('./controllers/error.js')
-const mongoConnect = require('./util/database.js').mongoConnect
-const User = require('./models/user.js')
+// const User = require('./models/user.js')
 // const sequelize = require('./util/database.js')
 // const Product = require('./models/product.js')
 // const Cart = require('./models/cart.js')
@@ -24,15 +23,14 @@ const shopRoutes = require('./routes/shop.js')
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')))
 
-app.use((req, res, next) =>{
-    User.findById('64e67c1124882e74e6f74489')
-    .then(user =>{
-        req.user = new User(user.name, user.email, user.cart, user._id);
-        next()
-    })
-    .catch(err => console.log(err))
-    // next()
-})
+// app.use((req, res, next) =>{
+//     User.findById('64e67c1124882e74e6f74489')
+//     .then(user =>{
+//         req.user = new User(user.name, user.email, user.cart, user._id);
+//         next()
+//     })
+//     .catch(err => console.log(err))
+// })
 
 app.use('/admin', adminRoutes)
 app.use(shopRoutes)
@@ -48,14 +46,11 @@ app.use(errorController.get404)
 // Product.belongsToMany(Cart, { through: CartItem});
 
 
-// mongoose.connect(
-//     "mongodb+srv://kushwaharaj903:9lFNRLohp8GYtEoi@cluster0.lllbyqe.mongodb.net/?retryWrites=true&w=majority"
-// )
-// .then(result => {
-//     console.log('connected')
-// })
-// .catch(err => console.log(err))
-mongoConnect(() => {
+mongoose.connect(
+    "mongodb+srv://kushwaharaj903:9lFNRLohp8GYtEoi@cluster0.lllbyqe.mongodb.net/shop?retryWrites=true&w=majority"
+)
+.then(result => {
+    console.log('connected')
     app.listen(4000)
 })
-//9lFNRLohp8GYtEoi
+.catch(err => console.log(err))
